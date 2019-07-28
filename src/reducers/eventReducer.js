@@ -8,3 +8,5 @@ const eventReducer = (state, { event, payload }) => {
       return state;
   }
 };
+
+export default eventReducer;

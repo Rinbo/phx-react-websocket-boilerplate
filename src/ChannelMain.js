@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import Channel from "./Channel";
 
 const ChannelMain = () => {
-  const [channelName, setChannelName] = useState();
+  const [channelName, setChannelName] = useState("");
   const [showChannel, setShowChannel] = useState(false);
 
   if (showChannel) {
     return <Channel channelName={channelName} />;
   }
   return (
-    <div className="myFlex">
+    <div className="myFlexRow">
       <input
         style={{ width: 200 }}
         value={channelName}
