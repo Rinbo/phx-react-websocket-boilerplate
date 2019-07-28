@@ -6,7 +6,7 @@ const ChannelMain = () => {
   const [showChannel, setShowChannel] = useState(false);
 
   if (showChannel) {
-    return <Channel channelName={channelName} />;
+    return <Channel channelName={channelName} setShowChannel={setShowChannel} />;
   }
   return (
     <div className="myFlexRow">

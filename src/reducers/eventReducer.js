@@ -1,9 +1,9 @@
 const eventReducer = (state, { event, payload }) => {
   switch (event) {
     case "phx_reply":
-      return { ...state, message: "Connection established..." };
-    case "msg_received":
-      return { ...state, message: payload };
+      return { ...state, message: payload.response.message || "Connection established" };
+    case "ok":
+      return { ...state, message: payload.response.message };
     default:
       return state;
   }

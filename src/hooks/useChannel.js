@@ -1,40 +1,48 @@
 import { useContext, useReducer, useEffect, useState } from "react";
 import SocketContext from "../socket/SocketContext";
 
-
 const useChannel = (channelTopic, reducer, initialState) => {
-  const socket = useContext(SocketContext)
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const [broadcast, setBroadcast] = useState(mustJoinChannelWarning)
+  const socket = useContext(SocketContext);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
+  const [channelObject, setChannelObject] = useState(null);
 
-  useEffect(() => (
-    joinChannel(socket, channelTopic, dispatch, setBroadcast)
-  ), [channelTopic])
+  // eslint-disable-next-line
+  useEffect(() => joinChannel(socket, channelTopic, dispatch, setBroadcast, setChannelObject), [
+    channelTopic
+  ]);
 
-  return [state, broadcast]
-}
+  return [state, broadcast, channelObject];
+};
 
-const joinChannel = (socket, channelTopic, dispatch, setBroadcast) => {
-  const channel = socket.channel(channelTopic, {client: 'browser'})
-
+const joinChannel = (socket, channelTopic, dispatch, setBroadcast, setChannelObject) => {
+  const channel = socket.channel(channelTopic, {
+    screen_name: channelTopic.split(":")[1]
+  });
   channel.onMessage = (event, payload) => {
-    dispatch({ event, payload })
-    return payload
-  }
+    dispatch({ event, payload });
+    return payload;
+  };
 
-  channel.join()
-    .receive("ok", ({messages}) =>  console.log('successfully joined channel', messages || ''))
-    .receive("error", ({reason}) => console.error('failed to join channel', reason))
+  channel
+    .join()
+    .receive("ok", ({ messages }) =>
+      console.log("successfully joined channel", messages || "")
+    )
+    .receive("error", ({ reason }) =>
+      console.error("failed to join channel", reason)
+    );
 
-  setBroadcast(() => channel.push.bind(channel))
-
+  setChannelObject(channel)
+  setBroadcast(() => channel.push.bind(channel));
   return () => {
-    channel.leave()
-  }
-}
+    channel.leave();
+  };
+};
 
-const mustJoinChannelWarning = () => (
-  () => console.error(`useChannel broadcast function cannot be invoked before the channel has been joined`)
-)
+const mustJoinChannelWarning = () => () =>
+  console.error(
+    `useChannel broadcast function cannot be invoked before the channel has been joined`
+  );
 
-export default useChannel
+export default useChannel;
