@@ -1,8 +1,9 @@
 {
-  "name": "islands_frontend",
+  "name": "phx-react-websocket-boilerplate",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "phoenix": "^1.4.9",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
