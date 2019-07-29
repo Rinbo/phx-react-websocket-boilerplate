@@ -1,6 +1,6 @@
 # Phoenix-React Websocket Boilerplate
 
-Boilerplate code for connecting to a Phoenix backend using websockets, using a custom hook for joining channels and making it availbale anywhere with React Context. It assumes that you have a channel running on the server called `game:channelName`, and a `handle_in` function that triggers on the event `message` and broadcasts back with the event `broadcast` (customize in the reducer of this code). 
+Boilerplate code for connecting to a Phoenix backend using websockets, using a custom hook for joining channels and making it available anywhere with React Context. It assumes that you have a channel running on the server called `game:*`, and a `handle_in` function that triggers on the event `message` and broadcasts back with the event `broadcast` (customize in the reducer of this code). 
 
 ## Give it a spin
 
