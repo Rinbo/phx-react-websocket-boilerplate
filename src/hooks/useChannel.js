@@ -1,23 +1,23 @@
 import { useContext, useReducer, useEffect, useState } from "react";
 import SocketContext from "../socket/SocketContext";
 
-const useChannel = (channelTopic, reducer, initialState) => {
+const useChannel = (channelTopic, name, reducer, initialState) => {
   const socket = useContext(SocketContext);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [broadcast, setBroadcast] = useState(mustJoinChannelWarning);
   const [channelObject, setChannelObject] = useState(null);
 
   // eslint-disable-next-line
-  useEffect(() => joinChannel(socket, channelTopic, dispatch, setBroadcast, setChannelObject), [
+  useEffect(() => joinChannel(socket, channelTopic, name, dispatch, setBroadcast, setChannelObject), [
     channelTopic
   ]);
 
   return [state, broadcast, channelObject];
 };
 
-const joinChannel = (socket, channelTopic, dispatch, setBroadcast, setChannelObject) => {
+const joinChannel = (socket, channelTopic, name, dispatch, setBroadcast, setChannelObject) => {
   const channel = socket.channel(channelTopic, {
-    screen_name: channelTopic.split(":")[1]
+    screen_name: name
   });
   channel.onMessage = (event, payload) => {
     dispatch({ event, payload });
