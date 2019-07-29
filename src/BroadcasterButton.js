@@ -4,7 +4,7 @@ const BroadcasterButton = ({broadcast, message}) => {
   
   return (
     <div>
-      <button onClick={() => broadcast("hello", {message})}>Broadcast static message</button>
+      <button onClick={() => broadcast("message", {message})}>Broadcast message</button>
     </div>
   );
 };
